@@ -6,6 +6,10 @@ import com.example.evoting.model.DataLogin
 import com.google.gson.Gson
 
 class SessionManager(var context: Context) {
+    companion object {
+        private const val KEY_TOKEN = "tokenLogin"
+    }
+
     var pref: SharedPreferences
     var editor: SharedPreferences.Editor
     private var PRIVATE_MODE = 0 //0 agar cuma bsa dibaca hp itu sendiri
@@ -75,7 +79,5 @@ class SessionManager(var context: Context) {
 //    var selectedDesa: Int?
 //        get() = pref.getInt("SelectedDesa", 0)
 
-    companion object {
-        private const val KEY_TOKEN = "tokenLogin"
-    }
+
 }

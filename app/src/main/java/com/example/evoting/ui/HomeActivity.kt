@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -19,6 +20,7 @@ import com.example.evoting.ui.voting.VotingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +29,6 @@ class HomeActivity : Activity() {
     companion object{
         const val EXTRA_LOGIN_DATA = "extra_login_data"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,9 @@ class HomeActivity : Activity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_LOGIN_DATA)
         }
+
+        var tvName: TextView = findViewById(R.id.tv_name)
+        tvName.text = "Halo, ${dataLogin?.name}"
 
         var tvTotalVoter: TextView = findViewById(R.id.tv_total_voter)
         var tvTotalCandidate: TextView = findViewById(R.id.tv_total_candidate)
@@ -66,25 +70,18 @@ class HomeActivity : Activity() {
                             tvTotalCandidate.text = result.allCandidate.toString()
                             tvVoteDone.text = result.totalDoneVote.toString()
                             tvVoteNotYet.text = result.totalNotVote.toString()
-//                            responseBody.data.forEach{
-//                                if(it != null){
-//                                    nameCategory.add(it.categoryName!!)
-//                                }
-//                            }
-//                            dataCategoryItem = responseBody.data
-//                            printLog("Data Quick Count ${responseBody.data}")
                         }
                     }
                 })
         }
 
-        val cvVoting = findViewById<CardView>(R.id.cv_voting)
+        val cvVoting: CardView = findViewById(R.id.cv_voting)
         cvVoting.setOnClickListener{
             val intent = Intent(this, VotingActivity::class.java)
             startActivity(intent)
         }
 
-        val cvAddCandidate = findViewById<CardView>(R.id.cv_add_candidate)
+        val cvAddCandidate: CardView = findViewById(R.id.cv_add_candidate)
         if(dataLogin?.userLevel!! > 0){
             cvAddCandidate.visibility = View.VISIBLE
         }else{
@@ -94,7 +91,7 @@ class HomeActivity : Activity() {
 
         }
 
-        val cvAddCommittee = findViewById<CardView>(R.id.cv_add_committee)
+        val cvAddCommittee: CardView = findViewById(R.id.cv_add_committee)
         if(dataLogin.userLevel == 10){
             cvAddCommittee.visibility = View.VISIBLE
         }else{
@@ -102,6 +99,43 @@ class HomeActivity : Activity() {
         }
         cvAddCommittee.setOnClickListener{
 
+        }
+
+        //EXIT
+        val ivExit: ImageView = findViewById(R.id.iv_exit)
+        ivExit.setOnClickListener{
+            GlobalScope.launch {
+                ApiService.endpoint.postLogout(token = "Bearer ${dataLogin.token}")
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Toast.makeText(
+                                this@HomeActivity,
+                                "Logout Gagal",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if(response.code() == 200){
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "Berhasil Logout",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val sessionManager = SessionManager(this@HomeActivity)
+                                sessionManager.logout()
+
+                                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
+                    })
+            }
         }
 
     }

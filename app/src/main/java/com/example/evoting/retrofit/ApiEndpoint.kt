@@ -12,9 +12,14 @@ import retrofit2.http.*
 
 interface ApiEndpoint {
 
+    //======= AUTH ========
     @Headers("Accept:application/json", "Content-Type:application/json")
     @POST("login")
     fun postLogin(@Body info: LoginRequest): Call<LoginResponse>
+
+    @Headers("Accept:application/json", "Content-Type:application/json")
+    @POST("logout")
+    fun postLogout(@Header("Authorization") token: String): Call<ResponseBody>
 
     //======= QUICK COUNT ========
     @Headers("Accept:application/json")
