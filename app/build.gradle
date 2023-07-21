@@ -53,4 +53,7 @@ dependencies {
 
     //For Create Graph
     implementation 'com.diogobernardino:williamchart:3.10.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+
 }

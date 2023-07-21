@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:contentDescription="@string/login"
-        android:src="@drawable/vote_logo" />
+        android:src="@drawable/logo_kpu" />
 
     <LinearLayout
         android:layout_width="match_parent"

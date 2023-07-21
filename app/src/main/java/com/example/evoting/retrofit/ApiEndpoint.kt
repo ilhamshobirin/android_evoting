@@ -3,6 +3,7 @@ package com.example.evoting.retrofit
 import com.example.evoting.model.LoginRequest
 import com.example.evoting.model.LoginResponse
 import com.example.evoting.model.QuickCountResponse
+import com.example.evoting.model.candidate.AllCandidateResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -21,10 +22,44 @@ interface ApiEndpoint {
     @POST("logout")
     fun postLogout(@Header("Authorization") token: String): Call<ResponseBody>
 
+
     //======= QUICK COUNT ========
     @Headers("Accept:application/json")
-    @GET("quick_count")
-    fun getQuickCount(@Header("Authorization") token: String): Call<QuickCountResponse>
+    @GET("rekap")
+    fun getRekapData(@Header("Authorization") token: String): Call<QuickCountResponse>
+
+
+    //======= CANDIDATE ========
+    @Headers("Accept:application/json")
+    @GET("candidates")
+    fun getAllCandidate(@Header("Authorization") token: String): Call<AllCandidateResponse>
+
+    @Multipart
+    @Headers("Accept:application/json")
+    @POST("candidates")
+    fun postCandidate(
+        @Header("Authorization") token: String,
+        @Part image: MultipartBody.Part?,
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+    ): Call<ResponseBody>
+
+    @Multipart
+    @Headers("Accept:application/json")
+    @POST("candidates/{id}")
+    fun putCandidate(
+        @Header("Authorization") token: String,
+        @Path("id") id:Int,
+        @Part image: MultipartBody.Part?,
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+    ): Call<ResponseBody>
+
+    @Headers("Accept:application/json")
+    @DELETE("candidates/{id}")
+    fun deleteCandidate(
+        @Header("Authorization") token: String,
+        @Path("id") id:Int,
+    ): Call<ResponseBody>
+
 
 //
 //    @Headers("Accept:application/json", "Content-Type:application/json")

@@ -16,6 +16,8 @@ import com.example.evoting.SessionManager
 import com.example.evoting.model.DataLogin
 import com.example.evoting.model.QuickCountResponse
 import com.example.evoting.retrofit.ApiService
+import com.example.evoting.ui.candidate.CandidateActivity
+import com.example.evoting.ui.committe.CommitteActivity
 import com.example.evoting.ui.voting.VotingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -50,7 +52,7 @@ class HomeActivity : Activity() {
         var tvVoteNotYet: TextView = findViewById(R.id.tv_vote_not_yet)
 
         GlobalScope.launch(Dispatchers.IO) {
-            ApiService.endpoint.getQuickCount("Bearer ${dataLogin?.token}")
+            ApiService.endpoint.getRekapData("Bearer ${dataLogin?.token}")
                 .enqueue(object : Callback<QuickCountResponse> {
                     override fun onFailure(call: Call<QuickCountResponse>, t: Throwable) {
 //                        printLog(t.toString())
@@ -88,7 +90,8 @@ class HomeActivity : Activity() {
             cvAddCandidate.visibility = View.GONE
         }
         cvAddCandidate.setOnClickListener{
-
+            val intent = Intent(this, CandidateActivity::class.java)
+            startActivity(intent)
         }
 
         val cvAddCommittee: CardView = findViewById(R.id.cv_add_committee)
@@ -98,7 +101,8 @@ class HomeActivity : Activity() {
             cvAddCommittee.visibility = View.GONE
         }
         cvAddCommittee.setOnClickListener{
-
+            val intent = Intent(this, CommitteActivity::class.java)
+            startActivity(intent)
         }
 
         //EXIT
