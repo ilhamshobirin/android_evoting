@@ -4,6 +4,8 @@ import com.example.evoting.model.LoginRequest
 import com.example.evoting.model.LoginResponse
 import com.example.evoting.model.QuickCountResponse
 import com.example.evoting.model.candidate.AllCandidateResponse
+import com.example.evoting.model.committee.AddCommitteeRequest
+import com.example.evoting.model.committee.AllCommitteeResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -61,47 +63,15 @@ interface ApiEndpoint {
     ): Call<ResponseBody>
 
 
-//
-//    @Headers("Accept:application/json", "Content-Type:application/json")
-//    @POST("register")
-//    fun postRegister(@Body info: RegisterRequest): Call<RegisterResponse>
-//
-//    @Headers("Accept:application/json", "Content-Type:application/json")
-//    @POST("logout")
-//    fun postLogout(@Header("Authorization") token: String): Call<ResponseBody>
-//
-//    //======= REPORT/TICKET ========
-//    @Headers("Accept:application/json")
-//    @GET("category_report")
-//    fun getCategoryReport(@Header("Authorization") token: String): Call<CategoryReportResponse>
-//
-//    @Multipart
-//    @Headers("Accept:application/json")
-//    @POST("report-trouble")
-//    fun postReport(
-//        @Header("Authorization") token: String,
-//        @Part report_pict: MultipartBody.Part?,
-//        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-//    ): Call<ResponseBody>
-//
-//    @Headers("Content-Type:application/json")
-//    @GET("report-trouble/report-by/{id}")
-//    fun getReportByUserId(@Path("id") id: Int?,
-//                    @Header("Authorization") token: String): Call<ReportResponse>
-//
-//    //======= ASSET ========
-//    @Headers("Accept:application/json")
-//    @GET("assets")
-//    fun getAssets(@Header("Authorization") token: String): Call<AssetResponse>
-//
-//    @Headers("Accept:application/json")
-//    @GET("used-assets/used-by/{id}")
-//    fun getMyAssets(@Path("id") id: Int?,
-//                    @Header("Authorization") token: String): Call<MyAssetResponse>
-//
-//    @Headers("Accept:application/json")
-//    @POST("used_assets")
-//    fun postRentAsset(@Header("Authorization") token: String,
-//                      @Body info: RentAssetRequest
-//    ): Call<ResponseBody>
+    //======= COMMITTEE ========
+    @Headers("Accept:application/json")
+    @GET("committees")
+    fun getAllCommittee(@Header("Authorization") token: String): Call<AllCommitteeResponse>
+
+    @Headers("Accept:application/json")
+    @POST("committees")
+    fun addCommittee(@Header("Authorization") token: String, @Body info: AddCommitteeRequest): Call<ResponseBody>
+
+
+
 }

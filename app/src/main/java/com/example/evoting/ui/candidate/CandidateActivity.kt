@@ -27,7 +27,6 @@ class CandidateActivity : Activity() {
 
     private var listCandidate: ArrayList<DataItemAllCandidate> = arrayListOf()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_candidate)
@@ -36,10 +35,12 @@ class CandidateActivity : Activity() {
         btnAddCandidate.setOnClickListener{
             val intent = Intent(this, DetailCandidateActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         val progressBar: ProgressBar = findViewById(R.id.progress_bar)
 
+        //Get List All Candidate
         GlobalScope.launch(Dispatchers.IO) {
             val sessionManager = SessionManager(this@CandidateActivity)
             val dataLogin = sessionManager.getDataLogin()
@@ -73,9 +74,9 @@ class CandidateActivity : Activity() {
 
         }
 
-        val rvReportData : RecyclerView = findViewById(R.id.rv_all_candidate)
-        rvReportData.layoutManager = LinearLayoutManager(this)
-        rvReportData.adapter = ListCandidateAdapter(listCandidate)
+        val rvCandidateData : RecyclerView = findViewById(R.id.rv_all_candidate)
+        rvCandidateData.layoutManager = LinearLayoutManager(this)
+        rvCandidateData.adapter = ListCandidateAdapter(listCandidate)
     }
 
     private fun printLog(message: String){

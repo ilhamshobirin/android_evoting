@@ -63,7 +63,7 @@ class DetailCandidateActivity : Activity() {
             intent.getParcelableExtra(EXTRA_DETAIL)
         }
 
-        val editMode: Boolean = detailCandidate != null
+        val editMode: Boolean = (detailCandidate != null)
         printLog("is edit mode? $editMode")
 
         val etName: EditText = findViewById(R.id.et_name)
@@ -152,16 +152,18 @@ class DetailCandidateActivity : Activity() {
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
                 ) {
-                    Toast.makeText(
-                        context,
-                        "Berhasil menambahkan data kandidat",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val intent = Intent(this@DetailCandidateActivity, CandidateActivity::class.java)
+                    if(response.isSuccessful){
+                        Toast.makeText(
+                            context,
+                            "Berhasil menambahkan data kandidat",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val intent = Intent(this@DetailCandidateActivity, CandidateActivity::class.java)
 //                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                    printLog(response.toString())
+                        startActivity(intent)
+                        finish()
+                        printLog(response.toString())
+                    }
                 }
             })
     }

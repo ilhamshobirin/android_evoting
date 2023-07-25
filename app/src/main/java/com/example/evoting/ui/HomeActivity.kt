@@ -32,6 +32,13 @@ class HomeActivity : Activity() {
         const val EXTRA_LOGIN_DATA = "extra_login_data"
     }
 
+    lateinit var tvName: TextView
+
+    lateinit var tvTotalVoter: TextView
+    lateinit var tvTotalCandidate: TextView
+    lateinit var tvVoteDone: TextView
+    lateinit var tvVoteNotYet: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -43,39 +50,13 @@ class HomeActivity : Activity() {
             intent.getParcelableExtra(EXTRA_LOGIN_DATA)
         }
 
-        var tvName: TextView = findViewById(R.id.tv_name)
+        tvName = findViewById(R.id.tv_name)
         tvName.text = "Halo, ${dataLogin?.name}"
 
-        var tvTotalVoter: TextView = findViewById(R.id.tv_total_voter)
-        var tvTotalCandidate: TextView = findViewById(R.id.tv_total_candidate)
-        var tvVoteDone: TextView = findViewById(R.id.tv_vote_done)
-        var tvVoteNotYet: TextView = findViewById(R.id.tv_vote_not_yet)
-
-        GlobalScope.launch(Dispatchers.IO) {
-            ApiService.endpoint.getRekapData("Bearer ${dataLogin?.token}")
-                .enqueue(object : Callback<QuickCountResponse> {
-                    override fun onFailure(call: Call<QuickCountResponse>, t: Throwable) {
-//                        printLog(t.toString())
-                        Toast.makeText(
-                            this@HomeActivity,
-                            "Gagal mendapatkan data Quick Count",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    override fun onResponse(
-                        call: Call<QuickCountResponse>,
-                        response: Response<QuickCountResponse>
-                    ) {
-                        val result = response.body()?.data
-                        if (result != null) {
-                            tvTotalVoter.text = result.voterOnly.toString()
-                            tvTotalCandidate.text = result.allCandidate.toString()
-                            tvVoteDone.text = result.totalDoneVote.toString()
-                            tvVoteNotYet.text = result.totalNotVote.toString()
-                        }
-                    }
-                })
-        }
+        tvTotalVoter = findViewById(R.id.tv_total_voter)
+        tvTotalCandidate = findViewById(R.id.tv_total_candidate)
+        tvVoteDone = findViewById(R.id.tv_vote_done)
+        tvVoteNotYet = findViewById(R.id.tv_vote_not_yet)
 
         val cvVoting: CardView = findViewById(R.id.cv_voting)
         cvVoting.setOnClickListener{
@@ -146,6 +127,35 @@ class HomeActivity : Activity() {
 
     override fun onStart() {
         super.onStart()
+
+        val sessionManager = SessionManager(this)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            ApiService.endpoint.getRekapData("Bearer ${sessionManager.getDataLogin()?.token}")
+                .enqueue(object : Callback<QuickCountResponse> {
+                    override fun onFailure(call: Call<QuickCountResponse>, t: Throwable) {
+//                        printLog(t.toString())
+                        Toast.makeText(
+                            this@HomeActivity,
+                            "Gagal mendapatkan data Quick Count",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    override fun onResponse(
+                        call: Call<QuickCountResponse>,
+                        response: Response<QuickCountResponse>
+                    ) {
+                        val result = response.body()?.data
+                        if (result != null) {
+                            tvTotalVoter.text = result.voterOnly.toString()
+                            tvTotalCandidate.text = result.allCandidate.toString()
+                            tvVoteDone.text = result.totalDoneVote.toString()
+                            tvVoteNotYet.text = result.totalNotVote.toString()
+                        }
+                    }
+                })
+        }
+
     }
 
     private fun printLog(message: String){
