@@ -1,5 +1,6 @@
 package com.example.evoting.retrofit
 
+import com.example.evoting.model.AddVotingRequest
 import com.example.evoting.model.LoginRequest
 import com.example.evoting.model.LoginResponse
 import com.example.evoting.model.QuickCountResponse
@@ -30,7 +31,6 @@ interface ApiEndpoint {
     @Headers("Accept:application/json")
     @GET("rekap")
     fun getRekapData(@Header("Authorization") token: String): Call<QuickCountResponse>
-
 
     //======= CANDIDATE ========
     @Headers("Accept:application/json")
@@ -72,5 +72,9 @@ interface ApiEndpoint {
     fun addCommittee(@Header("Authorization") token: String, @Body info: AddCommitteeRequest): Call<ResponseBody>
 
 
+    //======= VOTING ========
+    @Headers("Accept:application/json")
+    @POST("votings")
+    fun addVoting(@Header("Authorization") token: String, @Body info: AddVotingRequest): Call<ResponseBody>
 
 }

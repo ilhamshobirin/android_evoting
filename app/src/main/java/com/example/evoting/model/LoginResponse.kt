@@ -19,6 +19,9 @@ data class LoginResponse(
 @Parcelize
 data class DataLogin(
 
+	@field:SerializedName("id")
+	val id: Int? = null,
+
 	@field:SerializedName("address")
 	val address: String? = null,
 
@@ -41,5 +44,5 @@ data class DataLogin(
 	val token: String? = null,
 
 	@field:SerializedName("isvoted")
-	val isvoted: Int? = null
+	var isvoted: Int? = null
 ) : Parcelable

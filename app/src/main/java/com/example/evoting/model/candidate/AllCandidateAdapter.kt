@@ -2,6 +2,8 @@ package com.example.evoting.model.candidate
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +11,24 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.evoting.R
 import com.example.evoting.SessionManager
+import com.example.evoting.model.AddVotingRequest
 import com.example.evoting.model.DataLogin
+import com.example.evoting.retrofit.ApiService
+import com.example.evoting.ui.HomeActivity
+import com.example.evoting.ui.candidate.CandidateActivity
 import com.example.evoting.ui.candidate.DetailCandidateActivity
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AllCandidateAdapter (private val allCandidate: ArrayList<DataItemAllCandidate>):
         RecyclerView.Adapter<AllCandidateAdapter.ViewHolder>(){
@@ -29,6 +42,7 @@ class AllCandidateAdapter (private val allCandidate: ArrayList<DataItemAllCandid
         val sessionManager = SessionManager(itemView.context)
         val dataLogin: DataLogin? = sessionManager.getDataLogin()
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(candidate: DataItemAllCandidate) {
             tvCandidateName.text = candidate.name
             tvCandidateDetail.text = candidate.detail
@@ -46,8 +60,47 @@ class AllCandidateAdapter (private val allCandidate: ArrayList<DataItemAllCandid
                 btnAddVote.visibility = View.GONE
             }
 
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+            val current = LocalDateTime.now().format(formatter)
+
             btnAddVote.setOnClickListener {
+                val addVotingRequest = AddVotingRequest(current, dataLogin?.id!!, candidate.id!!)
+//                Log.d("Add Voting", "$addVotingRequest")
                 //ADD Vote
+                ApiService.endpoint.addVoting("Bearer ${dataLogin?.token}", addVotingRequest)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                        printLog(t.toString())
+                            Log.d("Add Voting", "Gagal")
+                            Toast.makeText(
+                                itemView.context,
+                                "Gagal menambahkan voting",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            val result = response.body()
+                            Log.d("Add Voting", "$response")
+                            if(response.isSuccessful){
+                                Toast.makeText(
+                                    itemView.context,
+                                    "Voting Berhasil",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(itemView.context, HomeActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                itemView.context.startActivity(intent)
+
+                                dataLogin.isvoted = 1
+
+                                sessionManager.setDataLogin(dataLogin)
+                            }
+
+                        }
+                    })
             }
         }
     }
@@ -59,6 +112,7 @@ class AllCandidateAdapter (private val allCandidate: ArrayList<DataItemAllCandid
         return ViewHolder(itemView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(allCandidate[position])
     }
