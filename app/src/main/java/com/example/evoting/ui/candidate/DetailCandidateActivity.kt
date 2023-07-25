@@ -106,16 +106,19 @@ class DetailCandidateActivity : Activity() {
                 Toast.makeText(this, "Nama tidak boleh kosong", Toast.LENGTH_SHORT).show()
             }else if(detail?.isEmpty()!!){
                 Toast.makeText(this, "Info Profil Kandidat tidak boleh kosong", Toast.LENGTH_SHORT).show()
-            }else if(photo_path?.isEmpty()!!){
-                Toast.makeText(this, "Foto Kandidat tidak boleh kosong", Toast.LENGTH_SHORT).show()
             }else{
                 if(editMode){
                     //TODO belum bisa
                     //edit candidate
-                    putCandidate(this, detailCandidate?.id!!, AddCandidateRequest(name, detail))
+                    putCandidate(this, detailCandidate?.id!!, AddCandidateRequest(etName.text.toString(), etDetail.text.toString()))
+//                    printLog("Edit")
                 }else{
-                    //Add Request
-                    postCandidate(this, AddCandidateRequest(name, detail))
+                    if(photo_path?.isEmpty()!!){
+                        Toast.makeText(this, "Foto Kandidat tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                    }else{
+                        //Add Request
+                        postCandidate(this, AddCandidateRequest(name, detail))
+                    }
                 }
             }
         }
@@ -123,7 +126,6 @@ class DetailCandidateActivity : Activity() {
         btnDeleteCandidate.setOnClickListener {
             deleteCandidate(this, detailCandidate?.id!!)
         }
-
 
     }
 
@@ -169,17 +171,9 @@ class DetailCandidateActivity : Activity() {
     }
 
     private fun putCandidate(context: Context, id: Int,  addCandidateRequest: AddCandidateRequest) {
-        val params = HashMap<String, @JvmSuppressWildcards RequestBody>()
-        params["name"] = addCandidateRequest.name.toRequestBody()
-        params["detail"] = addCandidateRequest.detail.toRequestBody()
-        val file = File(photo_path!!)
-
-        val requestBody : RequestBody = file.asRequestBody("image/*".toMediaType())
-        val parts : MultipartBody.Part  = MultipartBody.Part.createFormData("image", file.name, requestBody)
-
         val sessionManager = SessionManager(this)
 
-        ApiService.endpoint.putCandidate("Bearer ${sessionManager.getDataLogin()?.token}", id, parts, params)
+        ApiService.endpoint.putCandidate("Bearer ${sessionManager.getDataLogin()?.token}", id, addCandidateRequest)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Toast.makeText(

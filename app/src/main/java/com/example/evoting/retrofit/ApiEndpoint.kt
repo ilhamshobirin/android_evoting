@@ -3,6 +3,7 @@ package com.example.evoting.retrofit
 import com.example.evoting.model.LoginRequest
 import com.example.evoting.model.LoginResponse
 import com.example.evoting.model.QuickCountResponse
+import com.example.evoting.model.candidate.AddCandidateRequest
 import com.example.evoting.model.candidate.AllCandidateResponse
 import com.example.evoting.model.committee.AddCommitteeRequest
 import com.example.evoting.model.committee.AllCommitteeResponse
@@ -45,14 +46,12 @@ interface ApiEndpoint {
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
     ): Call<ResponseBody>
 
-    @Multipart
     @Headers("Accept:application/json")
-    @POST("candidates/{id}")
+    @PUT("candidates/{id}")
     fun putCandidate(
         @Header("Authorization") token: String,
         @Path("id") id:Int,
-        @Part image: MultipartBody.Part?,
-        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Body info: AddCandidateRequest,
     ): Call<ResponseBody>
 
     @Headers("Accept:application/json")

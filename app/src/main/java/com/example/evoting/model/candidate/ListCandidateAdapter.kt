@@ -47,7 +47,7 @@ class ListCandidateAdapter  (private val listCandidate: ArrayList<DataItemAllCan
         val itemView =
             LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_list_candidate, viewGroup, false)
 
-        return ListCandidateAdapter.ViewHolder(itemView)
+        return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

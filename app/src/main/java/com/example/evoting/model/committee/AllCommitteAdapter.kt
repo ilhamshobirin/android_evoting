@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evoting.R
-import com.example.evoting.model.candidate.AllCandidateAdapter
 
 class AllCommitteAdapter(private val allcommittee: ArrayList<DataItemAllCommittee>):
     RecyclerView.Adapter<AllCommitteAdapter.ViewHolder>() {

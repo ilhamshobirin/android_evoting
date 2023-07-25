@@ -74,7 +74,7 @@ class CandidateActivity : Activity() {
 
         }
 
-        val rvCandidateData : RecyclerView = findViewById(R.id.rv_all_candidate)
+        val rvCandidateData : RecyclerView = findViewById(R.id.rv_list_candidate)
         rvCandidateData.layoutManager = LinearLayoutManager(this)
         rvCandidateData.adapter = ListCandidateAdapter(listCandidate)
     }

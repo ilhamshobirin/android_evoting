@@ -3,13 +3,14 @@ package com.example.evoting.ui.voting
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.db.williamchart.view.BarChartView
 import com.example.evoting.R
 import com.example.evoting.SessionManager
-import com.example.evoting.model.QuickCountResponse
 import com.example.evoting.model.candidate.AllCandidateAdapter
 import com.example.evoting.model.candidate.AllCandidateResponse
 import com.example.evoting.model.candidate.DataItemAllCandidate
@@ -33,14 +34,10 @@ class VotingActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_voting)
 
+        val progressBar: ProgressBar = findViewById(R.id.progress_bar)
+
         val barChart: BarChartView = findViewById(R.id.barChart)
         barChart.animation.duration = animationDuration
-
-        var rvAllCandidate: RecyclerView = findViewById(R.id.rv_all_candidate)
-        val allCandidateAdapter = AllCandidateAdapter(allCandidate)
-        rvAllCandidate.adapter = allCandidateAdapter
-        rvAllCandidate.layoutManager = LinearLayoutManager(this)
-
 
         GlobalScope.launch(Dispatchers.IO) {
             val sessionManager = SessionManager(this@VotingActivity)
@@ -55,31 +52,31 @@ class VotingActivity : Activity() {
                             "Gagal mendapatkan data Kandidat",
                             Toast.LENGTH_SHORT
                         ).show()
+                        progressBar.visibility = View.GONE
                     }
                     override fun onResponse(
                         call: Call<AllCandidateResponse>,
                         response: Response<AllCandidateResponse>
                     ) {
+                        progressBar.visibility = View.GONE
                         val result = response.body()?.data
                         result?.forEach {
                             resultQuickCount.add(
-                                Pair("${it?.name?.substring(0, 15)} (${it?.voteCount})", it?.voteCount?.toFloat()!!)
+                                Pair("${it?.name?.take(15)} (${it?.voteCount})", it?.voteCount?.toFloat()!!)
                             )
                             allCandidate.add(it)
                         }
                         barChart.animate(resultQuickCount)
-//                        if (result != null) {
-//                            tvTotalVoter.text = result.voterOnly.toString()
-//                            tvTotalCandidate.text = result.allCandidate.toString()
-//                            tvVoteDone.text = result.totalDoneVote.toString()
-//                            tvVoteNotYet.text = result.totalNotVote.toString()
-//                        }
                         printLog("ALL Candidate $allCandidate")
 
                     }
                 })
 
         }
+
+        val rvAllCandidate : RecyclerView = findViewById(R.id.rv_all_candidate)
+        rvAllCandidate.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvAllCandidate.adapter = AllCandidateAdapter(allCandidate)
 
 
     }
