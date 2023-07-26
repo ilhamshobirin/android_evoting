@@ -1,4 +1,4 @@
-package com.example.evoting.model
+package com.example.evoting.model.voting
 
 data class AddVotingRequest (
     val vote_date: String,

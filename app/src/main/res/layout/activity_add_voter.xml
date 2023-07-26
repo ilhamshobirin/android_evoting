@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.voter.AddVoterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:background="@color/dark_primary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:text="Tambah Pemilih"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voter_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text_cut"
+                android:drawablePadding="5dp"
+                android:hint="Nama Pemilih"
+                android:textColorHint="@color/grey_dark"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            app:startIconDrawable="@drawable/ic_username_icon"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voter_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text_cut"
+                android:drawablePadding="5dp"
+                android:hint="Username"
+                android:textColorHint="@color/grey_dark"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voter_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text_cut"
+                android:inputType="textPassword"
+                android:drawablePadding="5dp"
+                android:hint="Password"
+                android:textColorHint="@color/grey_dark"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            app:startIconDrawable="@drawable/ic_card"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voter_ktp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text_cut"
+                android:drawablePadding="5dp"
+                android:hint="No. Ktp"
+                android:textColorHint="@color/grey_dark"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            app:startIconDrawable="@drawable/ic_person_add"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voter_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text_cut"
+                android:drawablePadding="5dp"
+                android:hint="Umur"
+                android:textColorHint="@color/grey_dark"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:startIconDrawable="@drawable/ic_info"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voter_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="4"
+                android:minLines="4"
+                android:maxLines="10"
+                android:background="@drawable/custom_edit_text_cut"
+                android:drawablePadding="5dp"
+                android:hint="Alamat" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_add_voter"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/custom_button_login"
+            android:text="Tambah Pemilih"
+            android:textColor="#ffff"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</ScrollView>

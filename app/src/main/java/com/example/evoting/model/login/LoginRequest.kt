@@ -1,4 +1,4 @@
-package com.example.evoting.model
+package com.example.evoting.model.login
 
 data class LoginRequest (
     val user_name: String,

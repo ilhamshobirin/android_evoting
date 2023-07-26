@@ -10,9 +10,9 @@ import android.widget.Toast
 import com.example.evoting.retrofit.ApiService
 import com.example.evoting.R
 import com.example.evoting.SessionManager
-import com.example.evoting.model.DataLogin
-import com.example.evoting.model.LoginRequest
-import com.example.evoting.model.LoginResponse
+import com.example.evoting.model.login.DataLogin
+import com.example.evoting.model.login.LoginRequest
+import com.example.evoting.model.login.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

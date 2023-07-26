@@ -1,13 +1,15 @@
 package com.example.evoting.retrofit
 
-import com.example.evoting.model.AddVotingRequest
-import com.example.evoting.model.LoginRequest
-import com.example.evoting.model.LoginResponse
+import com.example.evoting.model.voting.AddVotingRequest
+import com.example.evoting.model.login.LoginRequest
+import com.example.evoting.model.login.LoginResponse
 import com.example.evoting.model.QuickCountResponse
 import com.example.evoting.model.candidate.AddCandidateRequest
 import com.example.evoting.model.candidate.AllCandidateResponse
 import com.example.evoting.model.committee.AddCommitteeRequest
 import com.example.evoting.model.committee.AllCommitteeResponse
+import com.example.evoting.model.voting.AddVoterRequest
+import com.example.evoting.model.voting.AllVoterResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -77,4 +79,12 @@ interface ApiEndpoint {
     @POST("votings")
     fun addVoting(@Header("Authorization") token: String, @Body info: AddVotingRequest): Call<ResponseBody>
 
+    //======= VOTER ========
+    @Headers("Accept:application/json")
+    @GET("voters")
+    fun getAllVoter(@Header("Authorization") token: String): Call<AllVoterResponse>
+
+    @Headers("Accept:application/json")
+    @POST("voters")
+    fun addVoter(@Header("Authorization") token: String, @Body info: AddVoterRequest): Call<ResponseBody>
 }

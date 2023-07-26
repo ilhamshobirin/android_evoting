@@ -2,7 +2,7 @@ package com.example.evoting
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.evoting.model.DataLogin
+import com.example.evoting.model.login.DataLogin
 import com.google.gson.Gson
 
 class SessionManager(var context: Context) {

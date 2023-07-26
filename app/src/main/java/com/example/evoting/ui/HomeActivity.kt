@@ -3,7 +3,6 @@ package com.example.evoting.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,11 +12,12 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.example.evoting.R
 import com.example.evoting.SessionManager
-import com.example.evoting.model.DataLogin
+import com.example.evoting.model.login.DataLogin
 import com.example.evoting.model.QuickCountResponse
 import com.example.evoting.retrofit.ApiService
 import com.example.evoting.ui.candidate.CandidateActivity
 import com.example.evoting.ui.committe.CommitteActivity
+import com.example.evoting.ui.voter.VoterActivity
 import com.example.evoting.ui.voting.VotingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -64,11 +64,19 @@ class HomeActivity : Activity() {
             startActivity(intent)
         }
 
+        val cvAddVoter: CardView = findViewById(R.id.cv_add_voter)
         val cvAddCandidate: CardView = findViewById(R.id.cv_add_candidate)
         if(dataLogin?.userLevel!! > 0){
+            cvAddVoter.visibility = View.VISIBLE
             cvAddCandidate.visibility = View.VISIBLE
         }else{
+            cvAddVoter.visibility = View.GONE
             cvAddCandidate.visibility = View.GONE
+        }
+
+        cvAddVoter.setOnClickListener {
+            val intent = Intent(this, VoterActivity::class.java)
+            startActivity(intent)
         }
         cvAddCandidate.setOnClickListener{
             val intent = Intent(this, CandidateActivity::class.java)

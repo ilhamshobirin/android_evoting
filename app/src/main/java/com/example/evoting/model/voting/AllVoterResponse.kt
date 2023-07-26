@@ -1,13 +1,11 @@
-package com.example.evoting.model
+package com.example.evoting.model.voting
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-data class LoginResponse(
+data class AllVoterResponse(
 
 	@field:SerializedName("data")
-	val data: DataLogin? = null,
+	val data: List<DataItemVoter?>? = null,
 
 	@field:SerializedName("success")
 	val success: Boolean? = null,
@@ -16,14 +14,16 @@ data class LoginResponse(
 	val message: String? = null
 )
 
-@Parcelize
-data class DataLogin(
+data class DataItemVoter(
 
-	@field:SerializedName("id")
-	val id: Int? = null,
+	@field:SerializedName("password")
+	val password: String? = null,
 
 	@field:SerializedName("address")
 	val address: String? = null,
+
+	@field:SerializedName("updated_at")
+	val updatedAt: String? = null,
 
 	@field:SerializedName("user_name")
 	val userName: String? = null,
@@ -37,12 +37,15 @@ data class DataLogin(
 	@field:SerializedName("user_level")
 	val userLevel: Int? = null,
 
+	@field:SerializedName("created_at")
+	val createdAt: Any? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null,
+
 	@field:SerializedName("age")
 	val age: Int? = null,
 
-	@field:SerializedName("token")
-	val token: String? = null,
-
 	@field:SerializedName("isvoted")
-	var isvoted: Int? = null
-) : Parcelable
+	val isvoted: Int? = null
+)

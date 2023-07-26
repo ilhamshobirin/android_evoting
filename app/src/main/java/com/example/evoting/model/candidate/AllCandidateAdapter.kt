@@ -1,6 +1,5 @@
 package com.example.evoting.model.candidate
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -17,12 +16,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.evoting.R
 import com.example.evoting.SessionManager
-import com.example.evoting.model.AddVotingRequest
-import com.example.evoting.model.DataLogin
+import com.example.evoting.model.voting.AddVotingRequest
+import com.example.evoting.model.login.DataLogin
 import com.example.evoting.retrofit.ApiService
 import com.example.evoting.ui.HomeActivity
-import com.example.evoting.ui.candidate.CandidateActivity
-import com.example.evoting.ui.candidate.DetailCandidateActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

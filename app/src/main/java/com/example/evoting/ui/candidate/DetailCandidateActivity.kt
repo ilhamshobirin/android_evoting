@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
@@ -18,11 +17,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.evoting.R
 import com.example.evoting.SessionManager
-import com.example.evoting.model.DataLogin
 import com.example.evoting.model.candidate.AddCandidateRequest
 import com.example.evoting.model.candidate.DataItemAllCandidate
 import com.example.evoting.retrofit.ApiService
-import com.example.evoting.ui.HomeActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -108,7 +105,6 @@ class DetailCandidateActivity : Activity() {
                 Toast.makeText(this, "Info Profil Kandidat tidak boleh kosong", Toast.LENGTH_SHORT).show()
             }else{
                 if(editMode){
-                    //TODO belum bisa
                     //edit candidate
                     putCandidate(this, detailCandidate?.id!!, AddCandidateRequest(etName.text.toString(), etDetail.text.toString()))
 //                    printLog("Edit")
