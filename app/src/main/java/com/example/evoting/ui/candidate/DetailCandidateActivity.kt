@@ -48,11 +48,6 @@ class DetailCandidateActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_candidate)
 
-        imageView = findViewById(R.id.iv_photo)
-        imageView.setOnClickListener{
-            imageChooser()
-        }
-
         val detailCandidate = if (Build.VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra(EXTRA_DETAIL, DataItemAllCandidate::class.java)
         } else {
@@ -84,6 +79,14 @@ class DetailCandidateActivity : Activity() {
         }else{
             btnAddEditCandidate.text = "Tambah"
             btnDeleteCandidate.visibility = View.GONE
+        }
+
+
+        imageView = findViewById(R.id.iv_photo)
+        imageView.setOnClickListener{
+            if(!editMode){
+                imageChooser()
+            }
         }
 
         btnAddEditCandidate.setOnClickListener {

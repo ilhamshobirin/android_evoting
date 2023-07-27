@@ -28,6 +28,7 @@
             android:layout_toEndOf="@id/iv_list_candidate"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:text="Nama kandidat"/>
 
         <TextView

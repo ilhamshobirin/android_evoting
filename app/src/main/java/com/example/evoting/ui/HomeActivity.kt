@@ -66,12 +66,15 @@ class HomeActivity : Activity() {
 
         val cvAddVoter: CardView = findViewById(R.id.cv_add_voter)
         val cvAddCandidate: CardView = findViewById(R.id.cv_add_candidate)
+        val cvDeleteVoting: CardView = findViewById(R.id.cv_delete_voting)
         if(dataLogin?.userLevel!! > 0){
             cvAddVoter.visibility = View.VISIBLE
             cvAddCandidate.visibility = View.VISIBLE
+            cvDeleteVoting.visibility = View.VISIBLE
         }else{
             cvAddVoter.visibility = View.GONE
             cvAddCandidate.visibility = View.GONE
+            cvDeleteVoting.visibility = View.GONE
         }
 
         cvAddVoter.setOnClickListener {
@@ -81,6 +84,33 @@ class HomeActivity : Activity() {
         cvAddCandidate.setOnClickListener{
             val intent = Intent(this, CandidateActivity::class.java)
             startActivity(intent)
+        }
+        cvDeleteVoting.setOnClickListener {
+            GlobalScope.launch {
+                ApiService.endpoint.deleteVoting(token = "Bearer ${dataLogin.token}")
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Toast.makeText(
+                                this@HomeActivity,
+                                "Reset count gagal",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if (response.code() == 200) {
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "Reset count berhasil",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    })
+            }
         }
 
         val cvAddCommittee: CardView = findViewById(R.id.cv_add_committee)

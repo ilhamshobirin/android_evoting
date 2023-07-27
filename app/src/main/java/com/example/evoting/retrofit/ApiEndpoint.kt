@@ -79,6 +79,11 @@ interface ApiEndpoint {
     @POST("votings")
     fun addVoting(@Header("Authorization") token: String, @Body info: AddVotingRequest): Call<ResponseBody>
 
+    @Headers("Accept:application/json")
+    @DELETE("votings/delete/all")
+    fun deleteVoting(@Header("Authorization") token: String): Call<ResponseBody>
+
+
     //======= VOTER ========
     @Headers("Accept:application/json")
     @GET("voters")
