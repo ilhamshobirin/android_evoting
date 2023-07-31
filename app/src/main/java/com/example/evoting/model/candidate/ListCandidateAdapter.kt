@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.evoting.R
+import com.example.evoting.ui.candidate.CandidateActivity
 import com.example.evoting.ui.candidate.DetailCandidateActivity
 
 class ListCandidateAdapter  (private val listCandidate: ArrayList<DataItemAllCandidate>):
@@ -39,6 +40,7 @@ class ListCandidateAdapter  (private val listCandidate: ArrayList<DataItemAllCan
                 val intent = Intent(itemView.context, DetailCandidateActivity::class.java)
                 intent.putExtra(DetailCandidateActivity.EXTRA_DETAIL, candidate)
                 itemView.context.startActivity(intent)
+                (itemView.context as CandidateActivity).finish()
             }
         }
     }

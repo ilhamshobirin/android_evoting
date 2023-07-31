@@ -66,15 +66,12 @@ class HomeActivity : Activity() {
 
         val cvAddVoter: CardView = findViewById(R.id.cv_add_voter)
         val cvAddCandidate: CardView = findViewById(R.id.cv_add_candidate)
-        val cvDeleteVoting: CardView = findViewById(R.id.cv_delete_voting)
         if(dataLogin?.userLevel!! > 0){
             cvAddVoter.visibility = View.VISIBLE
             cvAddCandidate.visibility = View.VISIBLE
-            cvDeleteVoting.visibility = View.VISIBLE
         }else{
             cvAddVoter.visibility = View.GONE
             cvAddCandidate.visibility = View.GONE
-            cvDeleteVoting.visibility = View.GONE
         }
 
         cvAddVoter.setOnClickListener {
@@ -83,6 +80,20 @@ class HomeActivity : Activity() {
         }
         cvAddCandidate.setOnClickListener{
             val intent = Intent(this, CandidateActivity::class.java)
+            startActivity(intent)
+        }
+
+        val cvAddCommittee: CardView = findViewById(R.id.cv_add_committee)
+        val cvDeleteVoting: CardView = findViewById(R.id.cv_delete_voting)
+        if(dataLogin.userLevel == 10){
+            cvAddCommittee.visibility = View.VISIBLE
+            cvDeleteVoting.visibility = View.VISIBLE
+        }else{
+            cvAddCommittee.visibility = View.GONE
+            cvDeleteVoting.visibility = View.GONE
+        }
+        cvAddCommittee.setOnClickListener{
+            val intent = Intent(this, CommitteActivity::class.java)
             startActivity(intent)
         }
         cvDeleteVoting.setOnClickListener {
@@ -113,16 +124,6 @@ class HomeActivity : Activity() {
             }
         }
 
-        val cvAddCommittee: CardView = findViewById(R.id.cv_add_committee)
-        if(dataLogin.userLevel == 10){
-            cvAddCommittee.visibility = View.VISIBLE
-        }else{
-            cvAddCommittee.visibility = View.GONE
-        }
-        cvAddCommittee.setOnClickListener{
-            val intent = Intent(this, CommitteActivity::class.java)
-            startActivity(intent)
-        }
 
         //EXIT
         val ivExit: ImageView = findViewById(R.id.iv_exit)

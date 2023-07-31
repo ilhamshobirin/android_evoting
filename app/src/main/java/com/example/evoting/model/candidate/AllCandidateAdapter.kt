@@ -53,7 +53,7 @@ class AllCandidateAdapter (private val allCandidate: ArrayList<DataItemAllCandid
 //                .placeholder(R.drawable.ic_camera)
                 .into(ivCandidate)
 
-            if(dataLogin?.userLevel == 10 || dataLogin?.isvoted == 1){
+            if(dataLogin?.isvoted == 1){
                 btnAddVote.visibility = View.GONE
             }
 

@@ -58,6 +58,13 @@ class DetailCandidateActivity : Activity() {
         val editMode: Boolean = (detailCandidate != null)
         printLog("is edit mode? $editMode")
 
+        imageView = findViewById(R.id.iv_photo)
+        imageView.setOnClickListener{
+            if(!editMode){
+                imageChooser()
+            }
+        }
+
         val etName: EditText = findViewById(R.id.et_name)
         val etDetail: EditText = findViewById(R.id.et_detail)
 
@@ -82,12 +89,7 @@ class DetailCandidateActivity : Activity() {
         }
 
 
-        imageView = findViewById(R.id.iv_photo)
-        imageView.setOnClickListener{
-            if(!editMode){
-                imageChooser()
-            }
-        }
+
 
         btnAddEditCandidate.setOnClickListener {
             val name = if(editMode){
@@ -186,16 +188,19 @@ class DetailCandidateActivity : Activity() {
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
                 ) {
-                    Toast.makeText(
+                    if(response.isSuccessful){
+
+                        Toast.makeText(
                         context,
                         "Berhasil menambahkan data kandidat",
                         Toast.LENGTH_SHORT
-                    ).show()
-                    val intent = Intent(this@DetailCandidateActivity, CandidateActivity::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                    printLog(response.toString())
+                        ).show()
+                        val intent = Intent(this@DetailCandidateActivity, CandidateActivity::class.java)
+//                      intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                        printLog(response.toString())
+                    }
                 }
             })
     }
