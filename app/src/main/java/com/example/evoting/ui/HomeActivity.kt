@@ -50,6 +50,8 @@ class HomeActivity : Activity() {
             intent.getParcelableExtra(EXTRA_LOGIN_DATA)
         }
 
+        printLog(dataLogin.toString())
+
         tvName = findViewById(R.id.tv_name)
         tvName.text = "Halo, ${dataLogin?.name}"
 

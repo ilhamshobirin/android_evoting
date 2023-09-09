@@ -8,8 +8,9 @@ import java.util.concurrent.TimeUnit
 
 object ApiService {
 
-    private const val BASE_URL: String = "http://10.0.2.2:8000/api/" //TODO: url only for development with emulator
-//    private const val BASE_URL: String = "http://192.168.1.3:8000/api/"
+//    private const val BASE_URL: String = "http://10.0.2.2:8000/api/" //TODO: url only for development with emulator
+    private const val BASE_URL: String = "http://192.168.1.7:8000/api/"
+//    private const val BASE_URL: String = "http://127.0.0.1:8000/api/"
 
     private fun getInterceptor(): OkHttpClient {
         val logging = HttpLoggingInterceptor()

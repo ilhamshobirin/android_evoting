@@ -52,14 +52,14 @@ class LoginActivity : Activity() {
                         call: Call<LoginResponse>,
                         response: Response<LoginResponse>
                     ) {
-                        if (response.code() == 200) {
+                        if (response.code() == 200 && response.body()?.data != null) {
                             Toast.makeText(this@LoginActivity, "Login berhasil!", Toast.LENGTH_SHORT).show()
                             printLog("Login Success")
                             val result = response.body()
 //                            printLog(result.toString())
                             if(result?.data != null){
                                 val dataLogin: DataLogin = result.data
-                                printLog("Data Login $dataLogin")
+                                printLog("Data Login ${dataLogin.userLevel}")
                                 sessionManager.setDataLogin(dataLogin)
                             }
                             sessionManager.createLoginSession(result?.data?.token)
